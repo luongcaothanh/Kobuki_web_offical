@@ -1,0 +1,23 @@
+.map-container {
+  min-height: 20rem;
+}
+
+.map-controller {
+  margin-bottom: 1rem;
+}
+
+.map-button {
+  margin-right: 0.3rem;
+}
+
+.btn-color {
+  color: #007bff;
+  background-color: #fff;
+  border-color: #007bff;
+}
+
+.btn-color-active {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}

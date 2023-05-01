@@ -1,0 +1,44 @@
+{
+  "name": "jarvis-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "bootstrap": "^4.5.0",
+    "bson": "^4.0.4",
+    "chart.js": "^2.9.3",
+    "latest-createjs": "^1.0.24",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.2.2",
+    "react-chartjs-2": "^2.10.0",
+    "react-circular-progressbar": "^2.0.3",
+    "react-dom": "^16.13.1",
+    "react-nav2djs": "file:react-nav2djs-0.0.3/package",
+    "react-scripts": "3.4.1",
+    "roslib": "git://github.com/RobotWebTools/roslibjs.git#develop",
+    "typescript": "^3.9.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

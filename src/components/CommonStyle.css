@@ -1,0 +1,8 @@
+.box-item {
+    border: 1.5px solid rgba(128, 128, 128, 0.411);
+    border-radius: 10px;
+}
+
+.box-margin {
+    margin-bottom: 1rem;
+}
