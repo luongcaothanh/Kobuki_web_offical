@@ -129,7 +129,11 @@ class Map extends Component {
         this.setState({message: 'Robot is moving to station ' + this.state.stations[targetIndex].name, enableCancel: true, command: 'CancelGoal', goal: goal});
         goal.send();
         goal.on('result', () => {
-          this.setState({showModal: true, command: 'none', message: 'Robot is ready !', enableCancel: false});
+          if (this.state.enableCancel === false) {
+            this.setState({showModal: true});
+          } else {
+            this.setState({showModal: true, command: 'none', message: 'Robot is ready !', enableCancel: false});
+          }
         });
       }
     }
@@ -152,7 +156,11 @@ class Map extends Component {
     goal.send();
     goal.on('result', () => {
       rootObject.removeChild(targetMarker);
-      this.setState({showModal: true, command: 'none', message: 'Robot is ready !', enableCancel: false});
+      if (this.state.enableCancel === false) {
+        this.setState({showModal: true});
+      } else {
+        this.setState({showModal: true, command: 'none', message: 'Robot is ready !', enableCancel: false});
+      }
     });
   }
 
@@ -192,7 +200,7 @@ class Map extends Component {
               </Container>
               <Nav2d
                 id='random'
-                imageRobot={require('./jarvis.png')}
+                imageRobot={require('./kobuki.png')}
                 imageGoalArrow={require('./arrow-red.png')}
                 imageStationArrow={require('./arrow-green.png')}
                 ros={this.ros}
@@ -217,10 +225,10 @@ class Map extends Component {
               </Container>
               <Modal show={this.state.showModal} onHide={() => this.setState({showModal: false})}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Goal reached</Modal.Title>
+                  <Modal.Title>{this.state.command === "CancelGoal" ? "Goal cancel" : "Goal reached"}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  The robot has reached its destination.
+                  {this.state.command === "CancelGoal" ? "The goal has been cancelled." : "The robot has reached its destination."}
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="primary" onClick={() => this.setState({showModal: false})}>

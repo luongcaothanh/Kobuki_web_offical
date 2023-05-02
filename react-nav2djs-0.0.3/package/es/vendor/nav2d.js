@@ -165,7 +165,6 @@ NAV2D.Navigator = function (options) {
   this.robotMarker.visible = false;
   this.robotMarker.zIndex = 0;
   this.rootObject.addChild(this.robotMarker);
-  var initScaleSet = false;
 
   // var poseListener = new ROSLIB.Topic({
   //   ros: ros,

@@ -21,7 +21,6 @@ class MainPage extends Component {
     this.url = "ws://localhost:9090";
     this.ros = null;
     this.cmdVel = null;
-
     this.connectWebsocket = this.connectWebsocket.bind(this);
     this.registerTopic = this.registerTopic.bind(this);
     this.onChangeAngularVel = this.onChangeAngularVel.bind(this);
@@ -37,17 +36,16 @@ class MainPage extends Component {
       name : '/cmd_vel_mux/keyboard_teleop',
       messageType : 'geometry_msgs/Twist'
     });
-    console.log("published topic /cmd_vel_mux/keyboard_teleop");
+    console.log("Register Topic /cmd_vel_mux/keyboard_teleop");
   }
 
   connectWebsocket() {
-    console.log("connect to " + this.url);
     this.ros = new ROSLIB.Ros({
       url: this.url,
     });
     this.ros.on("connection", () => {
       this.setState({isConnectedWS: true});
-      console.log("Connected to websocket server ");
+      console.log("Connected to websocket server " + this.url);
       this.registerTopic();
     });
     this.ros.on("error", (err) => {

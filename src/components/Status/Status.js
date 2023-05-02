@@ -9,7 +9,7 @@ class Status extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      speed: 0.25,
+      speed: 0,
     };
     this.ros = props.ros || null;
     this.subVelocity = null;

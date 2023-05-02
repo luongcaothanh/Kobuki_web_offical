@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Header.css";
 import "../CommonStyle.css"
-import { Container, Alert, Button } from "react-bootstrap";
+import { Container, Alert } from "react-bootstrap";
 
 class Header extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class Header extends Component {
   }
 
   handleChange(event) {
-    this.state.value = event.target.value;
+    this.setState({value: event.target.value});
   }
 
   handleSubmit(event) {
@@ -35,9 +35,11 @@ class Header extends Component {
     event.preventDefault();
   }
 
-  componentWillReceiveProps(props) {
-    this.setState({ isConnected: props.isConnected })
-    this.ros = this.props.ros;
+  componentDidUpdate(prevProps) {
+    if (this.props.isConnected !== prevProps.isConnected) {
+      this.setState({ isConnected: this.props.isConnected });
+      this.ros = this.props.ros;
+    }
   }
 
   render() {

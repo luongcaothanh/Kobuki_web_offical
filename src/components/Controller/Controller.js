@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Card, Col, Row, Button } from "react-bootstrap";
+import { Container, Card, Col, Row, Button, ButtonGroup, ToggleButton } from "react-bootstrap";
 import "../CommonStyle.css";
 import "./Controller.css";
 import { Direction } from "../Common/Common.ts";
@@ -38,6 +38,11 @@ const Command = [
 function ControlButton(props) {
   return <Button variant="secondary" size="lg" className="button-control" onClick={props.onClick}>{props.label}</Button>
 }
+
+const radios = [
+  { name: 'Mapping', value: '1' },
+  { name: 'Localization', value: '2' },
+];
 
 const arrVel = [
   [
@@ -87,14 +92,13 @@ class Controller extends Component {
   }
 
   _handleKeyDown = (event) => {
-    // console.log("pressed " + event.keyCode);
     let target = Command.find(item => {
       if (item.code === event.keyCode) {
         return item;
       }
+      return null;
     });
     if (target) {
-      // console.log("press dir " + target.dir);
       this.onControl(0, target.dir);
     }
   }
@@ -177,6 +181,17 @@ class Controller extends Component {
         });
         this.cur_dir = 4;
         this.cmdVel.publish(newVelMsg);
+
+        this.mappingModeService = new ROSLIB.Service({
+          ros: this.ros,
+          name: '/rtabmap/set_mode_mapping',
+          serviceType: 'std_srvs/Empty'
+        });
+        this.localizationModeService = new ROSLIB.Service({
+          ros: this.ros,
+          name: '/rtabmap/set_mode_localization',
+          serviceType: 'std_srvs/Empty'
+        });
       }
     }
   }
@@ -210,6 +225,28 @@ class Controller extends Component {
               <Col><ControlButton label="m" onClick={() => this.onClickControlButton(Direction.SouthWest)} /></Col>
               <Col><ControlButton label="," onClick={() => this.onClickControlButton(Direction.South)} /></Col>
               <Col><ControlButton label="." onClick={() => this.onClickControlButton(Direction.SouthEast)} /></Col>
+            </Row>
+            <Row style={{marginTop: "1rem"}}>
+              <Col sm={4}><p style={{margin: "0.5rem", fontSize: "1.1rem", textAlign: "center"}}>Mode</p></Col>
+              <Col>
+                <ButtonGroup toggle>
+                  {radios.map((radio, idx) => (
+                    <ToggleButton
+                      key={idx}
+                      type="radio"
+                      variant="secondary"
+                      name="radio"
+                      value={radio.value}
+                      checked={this.state.radioValue === radio.value}
+                      onChange = {(e) => {
+                        this.setState({radioValue: e.currentTarget.value});
+                        e.currentTarget.value === '1' ? this.mappingModeService.callService() : this.localizationModeService.callService();
+                      }}>
+                      {radio.name}
+                    </ToggleButton>
+                  ))}
+                </ButtonGroup>
+              </Col>
             </Row>
           </Card.Body>
         </Card>
